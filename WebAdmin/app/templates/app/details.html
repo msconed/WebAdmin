@@ -1,0 +1,81 @@
+﻿{% extends "app/layout.html" %}
+
+{% block content %}
+
+<div class="details-top-text">{{main_info.pName}}({{main_info.uid}})<input hidden name="steamid" value="{{main_info.uid}}" /></div>
+<!--<div class="details-container">
+    <div class="details-container-header">Основное</div>
+
+    <table class="table-container">
+        <thead>
+            <tr>
+                <th><h1>Имя</h1></th>
+                <th><h1>UID</h1></th>
+                <th><h1>Действие</h1></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>123</td>
+                <td>456</td>
+                <td>
+                    <button>Редактировать</button>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+</div>-->
+
+
+<div class="details-container" >
+    <div class="details-container-header">Доступы к снаряжению</div>
+    <table class="table-container" style="width: 75%">
+        <thead>
+            <tr>
+                <th><h1>Название</h1></th>
+                <th><h1>Доступ</h1></th>
+            </tr>
+        </thead>
+        <tbody>
+
+            {% for key, vw in cloth_access.items %}
+            <input hidden name="{{key}}" value="0" />
+            <tr>
+                <td>{{vw.1}}</td>
+                <td>
+                    <label class="switch modern-switch">
+                        <input type="checkbox" value="{{key}}"
+                               {% if vw.0 %} checked {% endif %}
+                               hx-post="{% url 'update_items' %}"
+                               hx-include="[name='{{key}}'], [name='steamid']"
+                               hx-swap="none"
+                               hx-headers='{"X-CSRFToken": "{{ csrf_token }}", "X-Requested-With": "XMLHttpRequest"}' />
+                        <span class="slider round"></span>
+                    </label>
+                </td>
+            </tr>
+
+            {% endfor %}
+
+        </tbody>
+    </table>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+{% endblock %}

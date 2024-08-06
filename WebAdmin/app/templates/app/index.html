@@ -1,0 +1,57 @@
+﻿{% extends "app/layout.html" %}
+
+{% block content %}
+
+<button onclick="location.href='/logout';">
+    <span>Выйти</span>
+</button>
+<div class="main-container">
+    {% if steam_uid != None %}
+        {% if noHaveAccess %}
+            <div class="searchBox">
+                <input id="searchInput" class="searchInput" type="text" name="query" placeholder="Поиск..."
+                       hx-get="{% url 'search' %}"
+                       hx-trigger="input delay:1ms" hx-headers='{"X-Requested-With": "XMLHttpRequest"}'
+                       hx-target="#results"
+                       hx-indicator=".htmx-indicator"
+                       hx-swap="innerHTML settle:1" />
+
+            </div>
+            <div id="results">
+                {% include "app/search_results.html" %}
+            </div>
+
+        {% else %}
+            <div class="need-auth">
+                <div class="centered">
+                    <div class="card">
+                        <div class="card2">
+                            <div class="form">
+                                <p id="heading">У вас нет доступа!</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+    {% else %}
+    <div class="need-auth">
+        <div class="centered">
+            <div class="card">
+                <div class="card2">
+                    <div class="form">
+                        <p id="heading">Авторизуйтесь через Steam</p>
+                        <div style="display:flex;justify-content:center; padding-bottom: 30px">
+                            <button onclick="location.href='/login';">
+                                <span>Авторизоваться</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+</div>
+
+{% endblock %}

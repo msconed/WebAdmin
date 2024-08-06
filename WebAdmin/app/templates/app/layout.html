@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>
+                {% if steam_uid == None %}
+                    {{header_text_notAuthorized}}
+                {% else %}
+                    {% if noHaveAccess %}
+                        {{header_text}}
+                    {% else %}
+                        {{header_text_notAuthorized}}
+                    {% endif %}
+                {% endif %}
+    
+    </title>
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'app/content/bootstrap.min.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'app/content/site.css' %}" />
+    <script src="{% static 'app/scripts/modernizr-2.6.2.js' %}"></script>
+    <script src="{% static 'app/scripts/custom.js' %}"></script>
+    <script src="https://unpkg.com/htmx.org@2.0.1" integrity="sha384-QWGpdj554B4ETpJJC9z+ZHJcA/i59TyjxEPXiiUgN2WmTyV5OEZWCD6gQhgkdpB/" crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container"> 
+            
+
+            <div class="header-text">
+                {% if steam_uid == None %}
+                    {{header_text_notAuthorized}}
+                {% else %}
+                    {% if noHaveAccess %}
+                        {{header_text}}
+                    {% else %}
+                        {{header_text_notAuthorized}}
+                    {% endif %}
+                {% endif %}
+            </div>
+
+            
+        </div>
+    </div>
+    
+    <div class="container body-content">
+        {% block content %}{% endblock %}
+
+        {% if steam_uid == None %}
+        {% else %}
+            {% if noHaveAccess %}
+                <hr />
+                <footer>
+                    <p>&copy; {{ year }} - powered by Weiss</p>
+                </footer>
+            {% endif %}
+        {% endif %}
+    </div>
+
+
+
+{% block scripts %}{% endblock %}
+
+</body>
+</html>

@@ -1,0 +1,27 @@
+﻿{# search_results.html #}
+<table class="table-container">
+    <thead>
+        <tr>
+            <th><h1>Имя</h1></th>
+            <th><h1>UID</h1></th>
+            <th><h1>Действие</h1></th>
+        </tr>
+    </thead>
+    <tbody id="results-container">
+        {% if db_rows %}
+        {% for v in db_rows %}
+        <tr>
+            <td>{{ v.0 }}</td>
+            <td>{{ v.1 }}</td>
+            <td>
+                <button onclick="location.href='{% url 'details' v.1  %}'">Редактировать</button>
+            </td>
+        </tr>
+        {% endfor %}
+        {% else %}
+        <tr>
+            <td colspan="3">Ничего не найдено :(</td>
+        </tr>
+        {% endif %}
+    </tbody>
+</table>
